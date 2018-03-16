@@ -5,4 +5,9 @@
     <string name="pause_button_game_activity">Pause</string>
     <string name="name_game_activity">Name</string>
     <string name="score_game_activity">Score</string>
+    <string name="scoreTitle">Résultat</string>
+    <string name="scoreUserName">Pseudo</string>
+    <string name="scoreUserScore">Score</string>
+    <string name="scoreReplay">Replay</string>
+    <string name="scoreHome">Home</string>
 </resources>
