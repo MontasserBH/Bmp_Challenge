@@ -29,7 +29,7 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Utilisateur utilisateur = new Utilisateur(name.toString(), 0);
                 databaseReference.child(name.toString()).setValue(utilisateur);
-                Intent intent = new Intent(StartActivity.this, ScoreActivity.class);
+                Intent intent = new Intent(StartActivity.this, GameActivity.class);
                 intent.putExtra("nameFromStartActivity", name.getText().toString());
                 startActivity(intent);
             }
