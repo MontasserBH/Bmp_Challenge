@@ -34,21 +34,19 @@ public class ScoreActivity extends AppCompatActivity{
             nameTextView.setText(nameValue);
             scoreTextView.setText(scoreValue);
         }
+    }
 
-        home.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intentStart = new Intent(ScoreActivity.this, StartActivity.class);
-                intentStart.putExtra("nameFromScoreActivity", nameValue);
-                startActivity(intentStart);
-            }
-        });
-        replay.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intentGame = new Intent(ScoreActivity.this, GameActivity.class);
-                intentGame.putExtra("nameFromScoreActivity", nameValue);
-                startActivity(intentGame);
-            }
-        });
+    public void goToHome(View v)
+    {
+        Intent intentStart = new Intent(ScoreActivity.this, StartActivity.class);
+        startActivity(intentStart);
+    }
+
+    public void goToGame(View v)
+    {
+        Intent intentGame = new Intent(ScoreActivity.this, GameActivity.class);
+        intentGame.putExtra("nameFromScoreActivity", nameValue);
+        startActivity(intentGame);
     }
 
 }
