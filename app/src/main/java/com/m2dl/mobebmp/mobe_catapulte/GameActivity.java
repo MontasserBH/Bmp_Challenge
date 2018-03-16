@@ -56,6 +56,24 @@ public class GameActivity extends AppCompatActivity {
         moveLefttoRight.setDuration(4000);
         moveLefttoRight.setFillAfter(true);
         flyingMan.startAnimation(moveLefttoRight);
+        moveLefttoRight.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {}
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ImageView flyingMan = (ImageView)findViewById(R.id.flyingman);
+                TranslateAnimation moveLefttoRightI = new TranslateAnimation(400.0f, 1200.0f, -700.0f, 0.0f);
+                moveLefttoRightI.setDuration(2000);
+                moveLefttoRightI.setFillAfter(false);
+                flyingMan.startAnimation(moveLefttoRightI);
+            }
+        });
 
     }
+
 }
