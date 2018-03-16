@@ -12,35 +12,33 @@
 
         <ImageView
             android:id="@+id/landscape"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/landscape" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/flyingman"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@+id/cannon"
+            android:layout_alignStart="@+id/cannon"
+            android:layout_marginBottom="19dp"
+            android:layout_marginStart="23dp"
+            app:srcCompat="@drawable/flyingman" />
 
-            <ImageView
-                android:id="@+id/flyingman"
-                android:layout_width="100px"
-                android:layout_height="100px"
-                android:layout_alignBottom="@+id/cannon"
-                android:layout_alignStart="@+id/cannon"
-                android:layout_marginBottom="32dp"
-                android:layout_marginStart="32dp"
-                app:srcCompat="@drawable/flyingman" />
+        <ImageView
+            android:id="@+id/cannon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignStart="@+id/landscape"
+            android:layout_alignBottom="@+id/landscape"
+            android:layout_marginStart="50dp"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/cannon" />
 
-            <ImageView
-                android:id="@+id/cannon"
-                android:layout_width="100px"
-                android:layout_height="100px"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginBottom="17dp"
-                android:layout_marginStart="54dp"
-                app:srcCompat="@drawable/cannon" />
-
-        </RelativeLayout>
     </RelativeLayout>
 
     <ProgressBar
