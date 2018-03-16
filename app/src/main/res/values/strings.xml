@@ -2,7 +2,7 @@
     <string name="app_name">Mobe_Catapulte</string>
     <string name="home_button_game_activity">Home</string>
     <string name="stop_button_game_activity">Stop</string>
-    <string name="pause_button_game_activity">Pause</string>
+    <string name="pause_button_game_activity">Play</string>
     <string name="name_game_activity">Name</string>
     <string name="score_game_activity">Score</string>
     <string name="scoreTitle">Résultat</string>
