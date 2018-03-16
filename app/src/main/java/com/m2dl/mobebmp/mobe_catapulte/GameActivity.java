@@ -215,7 +215,7 @@ public class GameActivity extends AppCompatActivity {
         {
             nbShake ++;
             progressBar.setMax(100);
-            progressBar.setProgress(nbShake*2);
+            progressBar.setProgress(nbShake*5);
         }
     }
 
