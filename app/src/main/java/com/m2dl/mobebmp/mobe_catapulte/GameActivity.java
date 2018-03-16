@@ -1,6 +1,12 @@
 package com.m2dl.mobebmp.mobe_catapulte;
 
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorListener;
+import android.hardware.SensorManager;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +17,50 @@ public class GameActivity extends AppCompatActivity {
     private  String start_name;
     private TextView score;
     private TextView name;
+    private SensorManager mySensorManager ;
+    private final SensorEventListener mySensorEventListener = new SensorEventListener() {
+
+        public void onSensorChanged(SensorEvent se) {
+            updateAccelParameters(se.values[0], se.values[1], se.values[2]);   // (1)
+            if ((!shakeInitiated) && isAccelerationChanged()) {                                      // (2)
+                shakeInitiated = true;
+            } else if ((shakeInitiated) && isAccelerationChanged()) {                              // (3)
+                executeShakeAction();
+            } else if ((shakeInitiated) && (!isAccelerationChanged())) {                           // (4)
+                shakeInitiated = false;
+            }
+        }
+
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+	    /* can be ignored in this example */
+        }
+    };
+    /* Here we store the current values of acceleration, one for each axis */
+    private float xAccel;
+    private float yAccel;
+    private float zAccel;
+
+    /* And here the previous ones */
+    private float xPreviousAccel;
+    private float yPreviousAccel;
+    private float zPreviousAccel;
+
+    /* Used to suppress the first shaking */
+    private boolean firstUpdate = true;
+
+    /*What acceleration difference would we assume as a rapid movement? */
+    private final float shakeThreshold = 5.0f;
+
+    /* Has a shaking motion been started (one direction) */
+    private boolean shakeInitiated = false;
+
+    private int nbShake;
+
+    private boolean finish = false;
+    private long startTime = System.currentTimeMillis();
+    private final long timeLimit = 9000L; // Limit to 10 hours
+    private CountDownTimer timer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +78,30 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
+        nbShake = 0;
+        score = findViewById(R.id.score_text_view_game_activity);
+        mySensorManager  = (SensorManager) getSystemService(SENSOR_SERVICE);
 
+        mySensorManager.registerListener(mySensorEventListener, mySensorManager
+                        .getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
 
+        timer = new CountDownTimer(timeLimit, 61) {
+            public void onTick(long r) {
+                // Running
+                    long millis = System.currentTimeMillis() - startTime;
+                    String millisStr = String.valueOf(millis);
+
+                    // Display
+                    if (millisStr.length() > 3) {
+                        String time = String.valueOf(millis / 1000) + "." + millisStr.substring(millisStr.length() - 2);
+                    }
+            }
+
+            public void onFinish() {
+                finish = true;
+            }
+        }.start();
     }
 
     public void goToresult(View view){
@@ -45,4 +117,39 @@ public class GameActivity extends AppCompatActivity {
         Intent starteActivityI = new Intent(this, StartActivity.class);
         startActivity(starteActivityI);
     }
+
+    private void updateAccelParameters(float xNewAccel, float yNewAccel,
+                                       float zNewAccel) {
+                /* we have to suppress the first change of acceleration, it results from first values being initialized with 0 */
+        if (firstUpdate) {
+            xPreviousAccel = xNewAccel;
+            yPreviousAccel = yNewAccel;
+            zPreviousAccel = zNewAccel;
+            firstUpdate = false;
+        } else {
+            xPreviousAccel = xAccel;
+            yPreviousAccel = yAccel;
+            zPreviousAccel = zAccel;
+        }
+        xAccel = xNewAccel;
+        yAccel = yNewAccel;
+        zAccel = zNewAccel;
+    }
+
+    private boolean isAccelerationChanged() {
+        float deltaX = Math.abs(xPreviousAccel - xAccel);
+        float deltaY = Math.abs(yPreviousAccel - yAccel);
+        float deltaZ = Math.abs(zPreviousAccel - zAccel);
+        return (deltaX > shakeThreshold && deltaY > shakeThreshold)
+                || (deltaX > shakeThreshold && deltaZ > shakeThreshold)
+                || (deltaY > shakeThreshold && deltaZ > shakeThreshold);
+    }
+
+    private void executeShakeAction() {
+        if(!finish)
+        {
+            nbShake ++;
+        }
+    }
+
 }
