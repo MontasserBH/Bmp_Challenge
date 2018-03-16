@@ -24,15 +24,21 @@ public class StartActivity extends AppCompatActivity {
         final EditText name = findViewById(R.id.editText3);
         Button buttonStart = findViewById(R.id.button_start);
 
-        buttonStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Utilisateur utilisateur = new Utilisateur(name.toString(), 0);
-                databaseReference.child(name.getText().toString()).setValue(utilisateur);
-                Intent intent = new Intent(StartActivity.this, GameActivity.class);
-                intent.putExtra("nameFromStartActivity", name.getText().toString());
-                startActivity(intent);
-            }
-        });
+        String nom = name.getText().toString();
+        if (nom.isEmpty() || nom.equals(" ")){
+            buttonStart.setClickable(false);
+        }
+        else {
+            buttonStart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Utilisateur utilisateur = new Utilisateur(name.toString(), 0);
+                    databaseReference.child(name.getText().toString()).setValue(utilisateur);
+                    Intent intent = new Intent(StartActivity.this, GameActivity.class);
+                    intent.putExtra("nameFromStartActivity", name.getText().toString());
+                    startActivity(intent);
+                }
+            });
+        }
     }
 }
