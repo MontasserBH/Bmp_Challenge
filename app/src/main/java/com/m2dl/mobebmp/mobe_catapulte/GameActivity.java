@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class GameActivity extends AppCompatActivity {
@@ -25,6 +26,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView score;
     private TextView name;
     private SensorManager mySensorManager ;
+    ProgressBar progressBar;
 
     Chronometer simpleChronometer;
     private final SensorEventListener mySensorEventListener = new SensorEventListener() {
@@ -90,6 +92,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         nbShake = 0;
+        progressBar = findViewById(R.id.progress_bar_game_activity);
         simpleChronometer = (Chronometer) findViewById(R.id.chronometer10);
         score = findViewById(R.id.score_text_view_game_activity);
         mySensorManager  = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -211,6 +214,8 @@ public class GameActivity extends AppCompatActivity {
         if(!finish)
         {
             nbShake ++;
+            progressBar.setMax(100);
+            progressBar.setProgress(nbShake*2);
         }
     }
 

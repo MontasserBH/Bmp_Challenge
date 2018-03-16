@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Bmp_Challenge.iml" filepath="$PROJECT_DIR$/Bmp_Challenge.iml" />
+      <module fileurl="file://C:\Users\SoF\Documents\aM2DL\Android\Nouveau dossier\Bmp_Challenge\Bmp_Challenge.iml" filepath="C:\Users\SoF\Documents\aM2DL\Android\Nouveau dossier\Bmp_Challenge\Bmp_Challenge.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\SoF\Documents\aM2DL\Android\Nouveau dossier\Bmp_Challenge\app\app.iml" filepath="C:\Users\SoF\Documents\aM2DL\Android\Nouveau dossier\Bmp_Challenge\app\app.iml" />
     </modules>
   </component>
 </project>
