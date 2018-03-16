@@ -7,12 +7,14 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.os.CountDownTimer;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,13 +25,16 @@ public class GameActivity extends AppCompatActivity {
     private TextView score;
     private TextView name;
     private SensorManager mySensorManager ;
+
+    Chronometer simpleChronometer;
     private final SensorEventListener mySensorEventListener = new SensorEventListener() {
 
         public void onSensorChanged(SensorEvent se) {
             updateAccelParameters(se.values[0], se.values[1], se.values[2]);   // (1)
             if ((!shakeInitiated) && isAccelerationChanged()) {                                      // (2)
                 shakeInitiated = true;
-            } else if ((shakeInitiated) && isAccelerationChanged()) {                              // (3)
+            }
+            else if ((shakeInitiated) && isAccelerationChanged()) {                              // (3)
                 executeShakeAction();
             } else if ((shakeInitiated) && (!isAccelerationChanged())) {                           // (4)
                 shakeInitiated = false;
@@ -85,6 +90,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         nbShake = 0;
+        simpleChronometer = (Chronometer) findViewById(R.id.chronometer10);
         score = findViewById(R.id.score_text_view_game_activity);
         mySensorManager  = (SensorManager) getSystemService(SENSOR_SERVICE);
 
@@ -93,6 +99,7 @@ public class GameActivity extends AppCompatActivity {
                 SensorManager.SENSOR_DELAY_NORMAL);
 
         timer = new CountDownTimer(timeLimit, 61) {
+
             public void onTick(long r) {
                 // Running
                     long millis = System.currentTimeMillis() - startTime;
@@ -105,9 +112,58 @@ public class GameActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
+
+                simpleChronometer.stop();
                 finish = true;
+                startTime = System.currentTimeMillis();
+                ImageView flyingMan = (ImageView)findViewById(R.id.flyingman);
+                moveLefttoRight.setDuration(4000);
+                moveLefttoRight.setFillAfter(true);
+                flyingMan.startAnimation(moveLefttoRight);
+                moveLefttoRight.setAnimationListener(new Animation.AnimationListener() {
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {}
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {}
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        float distance = nbShake * 200;
+                        ImageView flyingMan = (ImageView)findViewById(R.id.flyingman);
+                        TranslateAnimation moveLefttoRightI = new TranslateAnimation(400.0f, (distance), -700.0f, 0.0f);
+                        moveLefttoRightI.setDuration(6000);
+                        moveLefttoRightI.setFillAfter(false);
+                        flyingMan.startAnimation(moveLefttoRightI);
+                        float scoreI = distance;
+                        score = (TextView)findViewById(R.id.score_text_view_game_activity);
+                        score.setText(""+distance);
+                        moveLefttoRightI.setAnimationListener(new Animation.AnimationListener() {
+
+                            @Override
+                            public void onAnimationStart(Animation animation) {}
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {}
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                Intent scoreActivityI = new Intent(GameActivity.this, ScoreActivity.class);
+                                name = findViewById(R.id.name_text_view_game_activity);
+                                score = findViewById(R.id.score_text_view_game_activity);
+                                scoreActivityI.putExtra("nameFromGameActivity", name.getText());
+                                scoreActivityI.putExtra("scoreFomGameActivity", score.getText());
+                                startActivity(scoreActivityI);
+                            }});
+
+                    }
+                });
+
+
             }
-        }.start();
+        };
+
     }
 
     public void goToresult(View view){
@@ -159,27 +215,13 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void catapult(View view){
-        ImageView flyingMan = (ImageView)findViewById(R.id.flyingman);
-        moveLefttoRight.setDuration(4000);
-        moveLefttoRight.setFillAfter(true);
-        flyingMan.startAnimation(moveLefttoRight);
-        moveLefttoRight.setAnimationListener(new Animation.AnimationListener() {
+        nbShake = 0;
+        simpleChronometer.setBase(SystemClock.elapsedRealtime());
+        simpleChronometer.start();
+        timer.start();
 
-            @Override
-            public void onAnimationStart(Animation animation) {}
 
-            @Override
-            public void onAnimationRepeat(Animation animation) {}
 
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                ImageView flyingMan = (ImageView)findViewById(R.id.flyingman);
-                TranslateAnimation moveLefttoRightI = new TranslateAnimation(400.0f, 1200.0f, -700.0f, 0.0f);
-                moveLefttoRightI.setDuration(2000);
-                moveLefttoRightI.setFillAfter(false);
-                flyingMan.startAnimation(moveLefttoRightI);
-            }
-        });
 
     }
 
