@@ -17,25 +17,42 @@
         android:id="@+id/textView3"
         android:layout_width="317dp"
         android:layout_height="77dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="32dp"
         android:text="TextView"
-        tools:layout_editor_absoluteX="42dp"
-        tools:layout_editor_absoluteY="45dp" />
+        app:layout_constraintBottom_toTopOf="@+id/editText3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editText3"
         android:layout_width="314dp"
         android:layout_height="57dp"
+        android:layout_marginBottom="234dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        tools:layout_editor_absoluteX="42dp"
-        tools:layout_editor_absoluteY="162dp" />
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="137dp"
         android:layout_height="66dp"
+        android:layout_marginEnd="124dp"
+        android:layout_marginStart="103dp"
+        android:layout_marginTop="32dp"
         android:text="Button"
-        tools:layout_editor_absoluteX="124dp"
-        tools:layout_editor_absoluteY="408dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/editText3" />
 </android.support.constraint.ConstraintLayout>
