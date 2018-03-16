@@ -48,7 +48,8 @@
         android:layout_width="110dp"
         android:layout_height="24dp"
         android:layout_marginBottom="32dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="140dp"
+        android:progressBackgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -64,6 +65,11 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Chronometer
+        android:id="@+id/chronometer10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/stop_button_game_activity"
