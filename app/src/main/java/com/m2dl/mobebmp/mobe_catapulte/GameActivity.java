@@ -4,6 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class GameActivity extends AppCompatActivity {
@@ -11,6 +16,7 @@ public class GameActivity extends AppCompatActivity {
     private  String start_name;
     private TextView score;
     private TextView name;
+    private TranslateAnimation moveLefttoRight = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 400.0f, Animation.RELATIVE_TO_SELF, -700.0f);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,5 +50,12 @@ public class GameActivity extends AppCompatActivity {
     public void goToHome(View view){
         Intent starteActivityI = new Intent(this, StartActivity.class);
         startActivity(starteActivityI);
+    }
+    public void catapult(View view){
+        ImageView flyingMan = (ImageView)findViewById(R.id.flyingman);
+        moveLefttoRight.setDuration(4000);
+        moveLefttoRight.setFillAfter(true);
+        flyingMan.startAnimation(moveLefttoRight);
+
     }
 }
